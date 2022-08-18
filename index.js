@@ -12,6 +12,10 @@ const app = express();
 
 app.use(bodyparser.json());
 
+app.get("/", (req, res) => {
+  res.send("This is default route");
+});
+
 app.post("/create", async (req, res) => {
   //a new entry which is suitable for the schema
   // is created in the RAM of the server
@@ -86,15 +90,15 @@ app.get("/get-id/:id", async (req, res) => {
 });
 
 app.patch("/update/:id", async (req, res) => {
-    //PATCH :- BODY + PARAMS
+  //PATCH :- BODY + PARAMS
   try {
-    const updated=await Todo.updateOne(
-        {"_id":req.params.id},
-        {
-            $set:{
-                title:req.body.title
-            }
+    const updated = await Todo.updateOne(
+      { "_id": req.params.id },
+      {
+        $set: {
+          title: req.body.title
         }
+      }
 
     );
     res.json(updated);
@@ -106,8 +110,8 @@ app.patch("/update/:id", async (req, res) => {
 app.delete("/delete/:id", async (req, res) => {
 
   try {
-    const updated=await Todo.deleteOne(
-        {"_id":req.params.id},
+    const updated = await Todo.deleteOne(
+      { "_id": req.params.id },
     );
     res.json(updated);
   } catch (error) {
